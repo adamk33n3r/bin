@@ -1,3 +1,4 @@
 set -x
-cp -r .emacs.d/ ~/
-cp .vimrc .gitconfig ~/
+cp -r .vim/ .emacs.d/ ~/
+cp .vimrc .gitconfig .bash* ~/
+. ~/.bashrc

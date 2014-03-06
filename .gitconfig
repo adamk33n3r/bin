@@ -1,0 +1,10 @@
+[user]
+	name = Adam Keenan
+	email = adam_keenan@taylor.edu
+[core]
+	editor = vim
+[alias]
+	st = status
+	ci = commit
+[color]
+	ui = auto

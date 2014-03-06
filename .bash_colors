@@ -1,0 +1,12 @@
+# To be as paramters in the 'color' function
+
+black='0'   # Black
+red='1'     # Red
+green='2'   # Green
+yellow='3'  # Yellow
+blue='4'    # Blue
+purple='5'  # Purple
+cyan='6'    # Cyan
+white='7'   # White
+
+#color_reset='\[\e[0m\]'	# Text Reset

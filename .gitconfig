@@ -8,3 +8,5 @@
 	ci = commit
 [color]
 	ui = auto
+[push]
+	default = matching

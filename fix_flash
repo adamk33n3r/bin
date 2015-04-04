@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo -e "Push <F3>\nSearch for _NET_ACTIVE\nPush <TAB>\nChange to __ET_ACTIVE\nPush <F9>\nSave"
+echo "Push <ENTER> to continue..."
+read
+sudo dhex /usr/lib/mozilla/plugins/libflashplayer.so

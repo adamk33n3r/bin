@@ -1,0 +1,2 @@
+#!/bin/bash
+xfwm4 --daemon --replace

@@ -1,0 +1,2 @@
+#!/bin/bash
+/home/akeenan/.config/pianobar/control-pianobar/control-pianobar.sh "$@"

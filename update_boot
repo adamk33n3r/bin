@@ -1,0 +1,8 @@
+#!/bin/bash
+
+sudo cp /etc/fstab /mnt/root/etc/fstab
+sudo cp /etc/default/grub /mnt/root/etc/default/grub
+sudo cp /etc/mkinitcpio.conf /mnt/root/etc/mkinitcpio.conf
+sudo mkinitcpio -p linux
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo cp -r /boot /mnt/root/

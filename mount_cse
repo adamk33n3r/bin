@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo mount -t cifs //fileshare.cse.taylor.edu/keener /mnt/cse -o "username=keener,password=nike27??,uid=akeenan,gid=akeenan"

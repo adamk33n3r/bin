@@ -1,0 +1,8 @@
+#!/bin/bash
+killall -9 compiz
+killall -9 emerald
+
+nohup compiz --replace >/dev/null &
+echo "Switch to desktop now or emerald may mess up"
+sleep 5
+nohup emerald --replace >/dev/null &

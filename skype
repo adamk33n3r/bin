@@ -1,0 +1,34 @@
+#!/bin/sh
+umask 0
+cd
+
+# 1. step: start pulseaudio in advance
+mkdir .pulse 2> /dev/null
+echo 'autospawn = yes' > .pulse/client.conf
+aplay -q -D unwantedpulse /usr/share/skype/sounds/ChatOutgoing.wav
+# now pulseaudio should be running
+
+# 2. step: important mixer settings - these are hardware dependent and (probably) not really necessary
+amixer sset Digital 100% unmute cap
+amixer sset Capture 99% unmute cap
+# etc etc
+pacmd set-source-volume alsa_output.dmix.monitor 0x10000
+pacmd set-source-volume alsa_input.dsnoop 0x11000
+
+# 3. step: start skype in background 
+/usr/bin/skype & 
+skypepid=$!
+
+sleep 9
+# to prevent funny programs like firefox from connecting (or even starting)
+# pulseaudio, we clean up rather quickly
+rm -rf .pulse
+
+# wait for skype to exit
+wait $skypepid
+
+# 4. step: stop pulseaudio
+pactl exit
+sleep 4
+pactl exit
+exit 0

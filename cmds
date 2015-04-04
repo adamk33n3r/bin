@@ -1,0 +1,31 @@
+#!/bin/bash
+
+echo "Useful Commands:"
+
+echo "1. pacupg: upgrades system while making pre-post subvolumes"
+echo "2. yaourt: package installer: searches aur too"
+echo "3. ip link set wlp2s0 down: puts down wifi"
+echo "4. rflink unblock all: unlocks wireless cards"
+echo "5. btrfs subvolume set-default <id> /: sets which subvolume to boot into"
+echo "6. snapper: manager for btrfs subvolumes"
+
+read -r selection
+
+case $selection in
+    1)
+        sudo pacupg
+        ;;
+    2)
+        echo -n "Install what?> "
+        read -r pkg
+        yaourt -S $pkg
+        if [ $? -ne 0 ]; then
+            echo "Package not found, searching..."
+            yaourt $pkg
+        fi
+        ;;
+    *)
+        echo "Unknown command"
+        ;;
+
+esac

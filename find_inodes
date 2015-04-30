@@ -1,0 +1,2 @@
+#!/bin/sh
+find . | cut -d/ -f 2 | uniq -c | sort -g

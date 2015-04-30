@@ -1,0 +1,2 @@
+#!/bin/bash
+amixer sget Master | awk 'FNR == 5 {print}' | awk '{print $4}'

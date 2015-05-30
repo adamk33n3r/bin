@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sshfs adam@eon.adam-keenan.net: ~/eon -o reconnect

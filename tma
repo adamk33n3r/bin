@@ -1,3 +1,4 @@
 #!/bin/bash
 
+#CRD=$(cat $HOME/.tmux/sessions/last) tmux attach
 tmux attach

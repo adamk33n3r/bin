@@ -1,0 +1,1 @@
+g++ $@ && ./a.out && /bin/rm ./a.out

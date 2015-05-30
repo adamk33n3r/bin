@@ -1,0 +1,1 @@
+find . -exec sh -c 'chmod $(get_file_perms "{}") "{}"' \;

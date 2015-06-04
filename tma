@@ -1,4 +1,8 @@
 #!/bin/bash
 
-#CRD=$(cat $HOME/.tmux/sessions/last) tmux attach
-tmux attach
+if [ -z $1 ]; then
+    last=$(cat $HOME/.tmux/sessions/last)
+    CRD=$(cat $HOME/.tmux/sessions/$last) tmux -L $last attach
+else
+    CRD=$(cat $HOME/.tmux/sessions/$1) tmux -L $1 attach -t $1
+fi

@@ -17,4 +17,5 @@ fi
 echo "Starting tmux from $CRD with session name $session"
 echo $CRD > $HOME/.tmux/sessions/$session
 echo $session > $HOME/.tmux/sessions/last
-tmux -L $session new -s $session
+#tmux -L $session new -s $session
+tmux -S $HOME/.tmux/sockets/$session new -s $session

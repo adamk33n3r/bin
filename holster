@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if tmux has-session -t holster; then
+    CRD=~/projects/holster tmux attach
+else
+    tm holster ~/projects/holster
+fi

@@ -5,9 +5,9 @@ if [ -z $1 ]; then
     CRD=$(cat $HOME/.tmux/sessions/$last) tmux -S $HOME/.tmux/sockets/$last attach
 else
     if [[ $1 = '--_completion' ]]; then
-        #echo "hello frank"
         echo '(/usr/bin/ls -1 $HOME/.tmux/sockets)'
         exit
     fi
+    echo $1 > $HOME/.tmux/sessions/last
     CRD=$(cat $HOME/.tmux/sessions/$1) tmux -S $HOME/.tmux/sockets/$1 attach -t $1
 fi

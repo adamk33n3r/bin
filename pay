@@ -1,3 +1,11 @@
 #!/bin/bash
 
-python -c "print((($1 if $1<=80 else 80)*12+($1%80*18))*.8)"
+# Calculate payment based on hours worked and pay per hour
+# usage: pay <hours> <rate>
+
+if [ -z $2 ]; then
+    echo "usage: pay <hours> <rate>"
+    exit
+fi
+
+python -c "print((($1 if $1<=80 else 80)*$2+($1%80*($2*1.5)))*.8)"

@@ -7,7 +7,6 @@ if [ -z $1 ]; then
     tmux -S $HOME/.tmux/sockets/$last attach
 else
     if [[ $1 = '--_completion' ]]; then
-        #echo "hello frank"
         echo '(/usr/bin/ls -1 $HOME/.tmux/sockets)'
         exit
     fi

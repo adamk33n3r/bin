@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mkdir $HOME/.tmux/sessions -p
+mkdir $HOME/.tmux/sockets -p
 
 if [ $# -eq 0 ]; then
     session=$(basename $(pwd))
@@ -27,7 +27,7 @@ if [ -S ~/.tmux/sockets/$session ]; then
 fi
 # It doesn't, create a new one
 echo "Starting tmux from $CRD with session name $session"
-echo $CRD > $HOME/.tmux/sessions/$session
-echo $session > $HOME/.tmux/sessions/last
+#echo $CRD > $HOME/.tmux/sessions/$session
+echo $session > $HOME/.tmux/last
 
 tmux -S $HOME/.tmux/sockets/$session new -s $session

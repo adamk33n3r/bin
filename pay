@@ -8,4 +8,4 @@ if [ -z $2 ]; then
     exit
 fi
 
-python -c "print((($1 if $1<=80 else 80)*$2+($1%80*($2*1.5)))*.8)"
+python -c "print('~$' + str((($1 if $1<=80 else 80)*$2+(0 if $1<=80 else $1%80*($2*1.5)))*.8))"

@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 
 import os, re, shutil, sys
+import argparse
+parser = argparse.ArgumentParser(epilog='example: regcp "SaveQualitySamples(.*)\.php" "SaveToxinSamples\\1.php"')
+parser.add_argument('match', help="the regex to match")
+parser.add_argument('to', help="the string to copy to")
+parser.add_argument('-d', '--dry', action="store_true", help="dry run")
+args = parser.parse_args()
 
-if len(sys.argv) != 3:
-    print('regcp "SaveQualitySamples(.*)\.php" "SaveToxinSamples\\1.php"')
-    sys.exit()
-match = sys.argv[1]
-to = sys.argv[2]
 
-p = re.compile(match)
+p = re.compile(args.match)
 
 files = os.listdir('.')
 filesToCopy = []
@@ -20,15 +21,17 @@ for f in files:
         print(f)
         filesToCopy.append(f)
 
+if len(filesToCopy) is 0:
+    print('Files not found')
+    sys.exit()
+
 print('\nTo:')
-p2=re.compile('(.*)(\\\\\\d)')
-m2=p2.search(to)
-prefix, num = m2.groups()
 for f in filesToCopy:
     m=p.search(f)
-    dest = p.sub(to, f)
+    dest = p.sub(args.to, f)
     print(dest)
     destinations.append(dest)
 
-for i in range(len(filesToCopy)):
-    shutil.copyfile(filesToCopy[i], destinations[i])
+if not args.dry:
+    for i in range(len(filesToCopy)):
+        shutil.copyfile(filesToCopy[i], destinations[i])

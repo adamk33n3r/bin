@@ -2,7 +2,13 @@
 
 import os, re, shutil, sys
 import argparse
-parser = argparse.ArgumentParser(epilog='example: regcp "SaveQualitySamples(.*)\.php" "SaveToxinSamples\\1.php"')
+parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, description="""
+Copy files using regular expressions.
+""", epilog="""
+Examples:
+    regcp "SaveQualitySamples(.*)\.php" "SaveToxinSamples\\1.php"
+    regcp "(.*)Quality(.*)Controller" "\\1Toxin\\2Controller.coffee"
+""")
 parser.add_argument('match', help="the regex to match")
 parser.add_argument('to', help="the string to copy to")
 parser.add_argument('-d', '--dry', action="store_true", help="dry run")

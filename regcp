@@ -1,5 +1,15 @@
 #!/usr/bin/env python
 
+########################################################################
+#                                                                      #
+# Copy files using regular expressions.                                #
+#                                                                      #
+# Examples:                                                            #
+#     regcp "SaveQualitySamples(.*)\.php" "SaveToxinSamples\\1.php"    #
+#     regcp "(.*)Quality(.*)Controller" "\\1Toxin\\2Controller.coffee" #
+#                                                                      #
+########################################################################
+
 import os, re, shutil, sys
 import argparse
 parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter, description="""
@@ -17,9 +27,12 @@ args = parser.parse_args()
 
 p = re.compile(args.match)
 
+# Get all files in current dir
 files = os.listdir('.')
 filesToCopy = []
 destinations = []
+
+# Match files against regex
 print('Copying files:')
 for f in files:
     matches = p.search(f)
@@ -27,10 +40,12 @@ for f in files:
         print(f)
         filesToCopy.append(f)
 
+# If none found, exit
 if len(filesToCopy) is 0:
     print('Files not found')
     sys.exit()
 
+# Generate the destination file names
 print('\nTo:')
 for f in filesToCopy:
     m=p.search(f)
@@ -38,6 +53,7 @@ for f in filesToCopy:
     print(dest)
     destinations.append(dest)
 
+# If not a dry run, copy the files
 if not args.dry:
     for i in range(len(filesToCopy)):
         shutil.copyfile(filesToCopy[i], destinations[i])

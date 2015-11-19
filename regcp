@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+
+import os, re, shutil, sys
+
+if len(sys.argv) != 3:
+    print('regcp "SaveQualitySamples(.*)\.php" "SaveToxinSamples\\1.php"')
+    sys.exit()
+match = sys.argv[1]
+to = sys.argv[2]
+
+p = re.compile(match)
+
+files = os.listdir('.')
+filesToCopy = []
+destinations = []
+print('Copying files:')
+for f in files:
+    matches = p.search(f)
+    if matches:
+        print(f)
+        filesToCopy.append(f)
+
+print('\nTo:')
+p2=re.compile('(.*)(\\\\\\d)')
+m2=p2.search(to)
+prefix, num = m2.groups()
+for f in filesToCopy:
+    m=p.search(f)
+    dest = p.sub(to, f)
+    print(dest)
+    destinations.append(dest)
+
+for i in range(len(filesToCopy)):
+    shutil.copyfile(filesToCopy[i], destinations[i])

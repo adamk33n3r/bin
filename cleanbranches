@@ -1,3 +1,8 @@
 #!/bin/bash
 
-git br --merged | grep -v "\*" | grep -v master | grep -v release | xargs -n 1 git branch -d
+# Get all branches merged into master
+#                               Exclude current branch
+#                                              Exclude master
+#                                                               Exclude release
+#                                                                                 Delete branches
+git br --merged origin/master | grep -v "\*" | grep -v master | grep -v release | xargs -n 1 git branch -d

@@ -30,4 +30,6 @@ echo "Starting tmux from $CRD with session name $session"
 #echo $CRD > $HOME/.tmux/sessions/$session
 echo $session > $HOME/.tmux/last
 
-tmux -S $HOME/.tmux/sockets/$session new -s $session
+tmux -S $HOME/.tmux/sockets/$session new -s $session -d
+tmux -S $HOME/.tmux/sockets/$session send-keys cd Enter 
+tmux -S $HOME/.tmux/sockets/$session attach

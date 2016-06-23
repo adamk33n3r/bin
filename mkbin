@@ -3,7 +3,11 @@
 if [ $# -eq 0 ]; then
     echo "Pass filename"
 else
-    echo -ne "#!/bin/bash\n\n\n" > $HOME/bin/$1
-    vim $HOME/bin/$1
-    chmod +x $HOME/bin/$1
+    if [ -f $HOME/bin/$1 ]; then
+        $EDITOR $HOME/bin/$1
+    else
+        echo -ne "#!/bin/bash\n\n\n" > $HOME/bin/$1
+        vim $HOME/bin/$1
+        chmod +x $HOME/bin/$1
+    fi
 fi

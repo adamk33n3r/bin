@@ -1,3 +1,7 @@
 #!/bin/bash
 
-sudo systemctl restart $1
+if [ $# -eq 2 ]; then
+    systemctl restart $1 --user
+else
+    sudo systemctl restart $1
+fi

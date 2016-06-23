@@ -1,7 +1,12 @@
 #!/bin/sh
+echo "$1"
+echo $2
+grep -il "$2" $1
 
 for file in $(grep -il "$2" $1)
 do
-sed -e "s/"$2"/"$3"/ig" $file > /tmp/tempfile.tmp
-mv /tmp/tempfile.tmp $file
+    echo $file
+    echo "s/$2/$3/ig"
+    sed -e "s/$2/$3/ig" $file > /tmp/tempfile.tmp
+    mv /tmp/tempfile.tmp $file
 done

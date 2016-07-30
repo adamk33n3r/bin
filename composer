@@ -1,0 +1,3 @@
+#!/bin/bash
+
+php -c /etc/php/php-composer.ini /usr/bin/composer "$@"

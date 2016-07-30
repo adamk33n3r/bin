@@ -1,0 +1,11 @@
+#!/bin/bash
+
+for socket in ~/.tmux/sockets/*
+do
+    tmux -S $socket ls &> /dev/null
+    if [ $? -ne 0 ]
+    then
+        echo $socket is empty. removing...
+        rm -i $socket
+    fi
+done

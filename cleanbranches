@@ -1,8 +1,15 @@
 #!/bin/bash
 
+# Update remotes
+git fetch
+
 # Get all branches merged into master
-#                               Exclude current branch
-#                                              Exclude master
-#                                                               Exclude release
-#                                                                                 Delete branches
-git br --merged origin/master | grep -v "\*" | grep -v master | grep -v release | xargs -n 1 git branch -d
+git branch --merged origin/master |
+# Exclude current branch
+grep -v "^\*" |
+# Exclude master
+grep -v "^  master\$" |
+# Exclude release
+grep -v "^  release\$" |
+# Delete branches
+xargs -n 1 git branch -d 2>/dev/null || echo 'No branches to clean'

@@ -1,0 +1,23 @@
+#!/usr/bin/python3
+
+import os, sys, re
+from itertools import groupby
+
+if not os.geteuid() is 0:
+    sys.exit('Must execute as root')
+
+def identifier(text):
+    return (re.findall('.+?(?=-\d)', text) + [text])[0]
+
+if len(sys.argv) > 1:
+    num = int(sys.argv[1])
+else:
+    num = 1
+
+for root, dirs, files in os.walk('/var/cache/pacman/pkg'):
+    files = [list(items) for gr, items in groupby(sorted(files), key=identifier)]
+    for fileGroup in files:
+        filesToDelete = fileGroup[:-num]
+        for fileName in filesToDelete:
+            print('Deleting', fileName + '...')
+            os.remove(root + '/' + fileName)

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+speed=$1
+if [[ -z $1 ]]; then
+  speed=1.75
+fi
+
+synclient MaxSpeed=$speed

@@ -1,4 +1,4 @@
 #!/bin/bash
 
 #grep "$@" * -Rn --color=always --exclude-dir "node_modules"
-ack "$@" * -Ri --color --ignore-dir "node_modules" --ignore-dir "storage" --ignore-dir "public" --ignore-dir "vendor"
+ack "$@" . -Ri --color --ignore-dir "node_modules" --ignore-dir "storage" --ignore-dir "public" --ignore-dir "vendor" --ignore-dir ".vscode"

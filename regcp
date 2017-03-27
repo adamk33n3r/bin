@@ -22,6 +22,7 @@ Examples:
 parser.add_argument('match', help="the regex to match")
 parser.add_argument('to', help="the string to copy to")
 parser.add_argument('-d', '--dry', action="store_true", help="dry run")
+parser.add_argument('-m', '--move', action="store_true", help="move files")
 args = parser.parse_args()
 
 
@@ -56,4 +57,7 @@ for f in filesToCopy:
 # If not a dry run, copy the files
 if not args.dry:
     for i in range(len(filesToCopy)):
-        shutil.copyfile(filesToCopy[i], destinations[i])
+        if args.move:
+            shutil.move(filesToCopy[i], destinations[i])
+        else:
+            shutil.copyfile(filesToCopy[i], destinations[i])

@@ -7,8 +7,8 @@ if [ $# -eq 0 ]; then
     CRD=$(pwd)
 else
     if [ $# -gt 1 ]; then
-        session=$1
-        CRD=$(readlink -fn $2)
+        session=$2
+        CRD=$(readlink -fn $1)
     else
         session=$(basename $1)
         CRD=$(readlink -fn $1)
@@ -21,6 +21,7 @@ if [ -S ~/.tmux/sockets/$session ]; then
     if tmux -S ~/.tmux/sockets/$session has -t $session 2> /dev/null; then
         # It does, attach
         echo "attaching"
+        echo $session > $HOME/.tmux/last
         tmux -S ~/.tmux/sockets/$session attach
         exit
     fi

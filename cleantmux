@@ -6,6 +6,6 @@ do
     if [ $? -ne 0 ]
     then
         echo $socket is empty. removing...
-        rm -i $socket
+        rm $socket
     fi
 done

@@ -34,3 +34,4 @@ echo $session > $HOME/.tmux/last
 tmux -S $HOME/.tmux/sockets/$session new -s $session -d
 tmux -S $HOME/.tmux/sockets/$session send-keys cd Enter 
 tmux -S $HOME/.tmux/sockets/$session attach
+cleantmux

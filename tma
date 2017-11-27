@@ -14,4 +14,4 @@ else
     echo $1 > $HOME/.tmux/last
     tmux -S $HOME/.tmux/sockets/$1 attach -t $1
 fi
-cleantmux
+#cleantmux

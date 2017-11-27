@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cat > /tmp/showhtml.html
+xdg-open /tmp/showhtml.html

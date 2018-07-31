@@ -1,0 +1,63 @@
+#!/usr/bin/env node
+
+const execSync = require('child_process').execSync;
+const request = require('request-promise-native');
+
+const TOKEN = process.env.GITLAB_TOKEN;
+
+function exitWithError(msg) {
+  console.error(msg);
+  process.exit(1);
+}
+
+if (!TOKEN) {
+  exitWithError('env var $GITLAB_TOKEN was not set');
+}
+
+const branchName = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trimRight();
+
+request.get({
+  url: 'https://gitlab.myfarms.com/api/v4/projects/11/pipelines',
+  headers: {
+    'private-token': TOKEN,
+  },
+})
+.then((response) => {
+  let pipelines = JSON.parse(response);
+  pipelines = pipelines.filter((pipeline) => pipeline.ref === branchName);
+
+  if (pipelines.length === 0) {
+    exitWithError(`No pipelines with ref: ${branchName}`);
+  }
+
+  const pipelineID = pipelines[0].id;
+  request.get({
+    url: `https://gitlab.myfarms.com/api/v4/projects/11/pipelines/${pipelineID}/jobs`,
+    headers: {
+      'private-token': TOKEN,
+    },
+  })
+  .then((response) => {
+    const jobs = JSON.parse(response);
+    const reviewJob = jobs.find((job) => job.name === 'review');
+
+    if (reviewJob.status === 'success') {
+      exitWithError(`Review app already deployed at http://${branchName}.review.myfarms.com`);
+    }
+
+    console.log(`Deploying review app on http://${branchName}.review.myfarms.com`);
+    console.log(`Progress at https://gitlab.myfarms.com/myfarms/myfarms/-/jobs/${reviewJob.id}`);
+
+    request.post({
+      url: `https://gitlab.myfarms.com/api/v4/projects/11/jobs/${reviewJob.id}/play`,
+      headers: {
+        'private-token': TOKEN,
+      },
+    })
+    .then((response) => {
+      //console.log(JSON.parse(response));
+      console.log('Job executed');
+    });
+  });
+});
+

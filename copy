@@ -1,3 +1,12 @@
 #!/bin/bash
 
-xclip -i -selection clipboard
+if grep -q Microsoft /proc/version; then
+  if [ -n "$1" ]; then
+    clip.exe < $1
+    exit
+  fi
+  clip.exe
+else
+  xclip -i -selection clipboard
+fi
+

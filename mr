@@ -1,0 +1,7 @@
+#!/bin/bash
+
+source=$(git rev-parse --abbrev-ref HEAD)
+target=${1:-master}
+
+cmd.exe /C start "https://gitlab.myfarms.com/myfarms/myfarms/merge_requests/new?merge_request%5Bsource_branch%5D=$source^&merge_request%5Btarget_branch%5D=$target^&merge_request%5Bforce_remove_source_branch%5D=1"
+

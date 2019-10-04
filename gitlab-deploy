@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const execSync = require('child_process').execSync;
-const request = require('request-promise-native');
+const request = require('request');
 
 const TOKEN = process.env.GITLAB_TOKEN;
 
@@ -21,8 +21,7 @@ request.get({
   headers: {
     'private-token': TOKEN,
   },
-})
-.then((response) => {
+}, (err, r, response) => {
   let pipelines = JSON.parse(response);
   pipelines = pipelines.filter((pipeline) => pipeline.ref === branchName);
 
@@ -36,8 +35,7 @@ request.get({
     headers: {
       'private-token': TOKEN,
     },
-  })
-  .then((response) => {
+  }, (err, r, response) => {
     const jobs = JSON.parse(response);
     const reviewJob = jobs.find((job) => job.name === 'review');
 
@@ -53,8 +51,7 @@ request.get({
       headers: {
         'private-token': TOKEN,
       },
-    })
-    .then((response) => {
+    }, (err, r, response) => {
       //console.log(JSON.parse(response));
       console.log('Job executed');
     });

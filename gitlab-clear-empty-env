@@ -1,0 +1,68 @@
+#!/usr/bin/env node
+
+const execSync = require('child_process').execSync;
+const request = require('request');
+
+const TOKEN = process.env.GITLAB_TOKEN;
+
+function exitWithError(msg) {
+  console.error(msg);
+  process.exit(1);
+}
+
+if (!TOKEN) {
+  exitWithError('env var $GITLAB_TOKEN was not set');
+}
+
+function deleteEnv(id) {
+  request.del({
+    url: 'https://gitlab.myfarms.com/api/v4/projects/11/environments/'+id,
+    headers: {
+      'private-token': TOKEN,
+    },
+  }, (err, response, body) => {
+  });
+}
+
+let cont = true;
+let page = 1;
+const brokenEnvironments = [];
+const async = require('async');
+async.whilst(function () {
+  return cont;
+}, function (next) {
+  console.log(page);
+  request.get({
+    url: 'https://gitlab.myfarms.com/api/v4/projects/11/environments?per_page=100&page='+page,
+    headers: {
+      'private-token': TOKEN,
+    },
+  }, (err, response, body) => {
+    const environments = JSON.parse(body);
+    if (environments.length == 0) {
+      cont = false;
+      next();
+      return;
+    }
+    environments.forEach((env) => {
+      if (env.external_url == null) {
+        brokenEnvironments.push(env)
+        return;
+      }
+      request.get(env.external_url, function (err, response, body) {
+        if (err || response.statusCode == 404) {
+          brokenEnvironments.push(env)
+        } else {
+        }
+      });
+    });
+    page++;
+    next();
+  });
+}, function (err, n) {
+  console.error(err, n);
+  console.log(brokenEnvironments.length);
+  brokenEnvironments.forEach((env) => {
+    deleteEnv(env.id);
+  });
+});

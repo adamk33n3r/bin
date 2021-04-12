@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if grep -q Microsoft /proc/version; then
+if grep -q [Mm]icrosoft /proc/version; then
   if [ -n "$1" ]; then
-    clip.exe < $1
+    clip.exe < "$1"
     exit
   fi
   clip.exe
